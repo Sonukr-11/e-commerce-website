@@ -1,12 +1,37 @@
+const searchInput = document.getElementById('searchInput');
+
+// Capture user input when they press Enter
+searchInput.addEventListener('keydown', function(event) {
+  if (event.key === 'Enter') {
+    const query = searchInput.value;
+    performSearch(query);
+  }
+});
+
+function performSearch(query) {
+  // Perform search logic based on the query
+  // You can search through an array, filter data, or make an API request
+
+  // Example: Search through an array of objects
+  const results = products.filter((item) => {
+    const lowercaseQuery = query.toLowerCase();
+    return item.keywords.some((keyword) => keyword.toLowerCase().includes(lowercaseQuery)) 
+    ||  item.name.toLowerCase().includes(lowercaseQuery)  ;
+  });
+
+  // Display the search results
+  displayResults(results);
+}
 
 
-//combining all the product 
 
-let productshtml = '';
+function displayResults( filteredProducts )
+{
+  let productshtml = '';
 
 // generate html 
 
-products.forEach((product) => {
+filteredProducts.forEach((product) => {
     productshtml+= `<div class="product-container">
      <div class="product-image-container">
        <img class="product-image"
@@ -59,7 +84,7 @@ products.forEach((product) => {
      `;
 });
 
-console.log(productshtml);
+// console.log(productshtml);
 
 // take this html & put it on to the page by using dom 
 document.querySelector('.js-products-grid').innerHTML = productshtml ;
@@ -97,3 +122,6 @@ document.querySelectorAll('.js-add-to-cart').forEach((button) => {
        document.querySelector('.js-cart-quantity').innerHTML = cartquantity;
     });
 });
+}
+
+displayResults(products);
